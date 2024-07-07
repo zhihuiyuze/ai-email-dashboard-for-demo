@@ -4,9 +4,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Phone, Mail, Star, Clock, Send, ChevronDown, Search, Settings, Grid, HelpCircle, User, Menu, Inbox, UserPlus, Sliders, MoreHorizontal, Folder, Globe, Zap, Bot } from 'lucide-react';
 import './App.css';
 
-// 国家代码到表情的映射
 const countryEmoji = {
   'UK': '🇬🇧',
+  'GB': '🇬🇧', // 添加 GB 的映射
   'USA': '🇺🇸',
   'China': '🇨🇳',
   // 添加更多国家...
@@ -35,7 +35,19 @@ const translations = {
     'registeredAddress': 'Registered Address',
     'contactInfo': 'Contact Information',
     'sourceInfo': 'Source',
-    'details': 'Details'
+    'details': 'Details',
+    'aiSearchInfo': 'Use AI to Access Search Engines and Collect Information',
+    'products': 'Products',
+    'ukDedicated': 'UK Dedicated',
+    'ukServers': 'UK Servers',
+    'cloudServices': 'Cloud Services',
+    'ukVPS': 'UK VPS',
+    'ukVDS': 'UK VDS',
+    'productSource': 'Source',
+    'company': 'Company',
+    'employee': 'Employee',
+    'country': 'Country',
+    'enterAdditionalInstructions': 'Enter any additional instructions or notes...'
   },
   'zh': {
     'compose': '撰写',
@@ -58,7 +70,19 @@ const translations = {
     'registeredAddress': '注册地址',
     'contactInfo': '联系方式',
     'sourceInfo': '信息来源',
-    'details': '详细信息'
+    'details': '详细信息',
+    'aiSearchInfo': '使用AI访问搜索引擎并搜索信息',
+    'products': '提供的产品',
+    'ukDedicated': '英国独立服务器',
+    'ukServers': '英国服务器',
+    'cloudServices': '云服务',
+    'ukVPS': '英国VPS',
+    'ukVDS': '英国VDS',
+    'productSource': '来源',
+    'company': '公司',
+    'employee': '员工',
+    'country': '国家',
+    'enterAdditionalInstructions': '请输入任何额外的指示或注意事项...'
   }
 };
 
@@ -141,6 +165,17 @@ const SearchResults = ({ results, language }) => {
               ({translations[language].sourceInfo}: {result.contactSource})
             </span>
           </div>
+          <div className="mt-2">
+            <strong>{translations[language].products}：</strong>
+            <ul className="list-disc list-inside ml-4">
+              {result.products.map((product, idx) => (
+                <li key={idx}>{translations[language][product]}</li>
+              ))}
+            </ul>
+            <span className="text-sm text-gray-500">
+              ({translations[language].productSource}: {result.productSource})
+            </span>
+          </div>
         </div>
       ))}
     </div>
@@ -165,7 +200,9 @@ const CustomerInfoCollection = ({ language }) => {
         addressSource: "govuk officers",
         email: "sales@27fibre.co.uk",
         phone: "0161 987 5005",
-        contactSource: "https://27fibre.co.uk/contact-us/"
+        contactSource: "https://27fibre.co.uk/contact-us/",
+        products: ['ukDedicated', 'ukServers', 'cloudServices', 'ukVPS', 'ukVDS'],
+        productSource: "27fibre.co.uk/"
       }
     ];
 
@@ -212,7 +249,7 @@ const CustomerInfoCollection = ({ language }) => {
             value={additionalInstructions}
             onChange={(e) => setAdditionalInstructions(e.target.value)}
             className="w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-24"
-            placeholder={translations[language].additionalInstructions + "..."}
+            placeholder={translations[language].enterAdditionalInstructions}
           />
         </div>
 
@@ -221,7 +258,7 @@ const CustomerInfoCollection = ({ language }) => {
           className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline flex items-center justify-center"
         >
           <Search size={18} className="mr-2" />
-          {translations[language].collectInfo}
+          {translations[language].aiSearchInfo}
         </button>
       </div>
 
